@@ -69,3 +69,20 @@
 |Address|进出地点|
 |Access|是否通过。分为“0”和“1”|
 |Describe|描述。分为“禁止通过-没有权限”和“允许通过”|
+
+## 安装依赖与程序
+
+### 安装依赖
+```
+pip install -r requirments.txt
+```
+
+### 程序运行说明
+- 必须先运行`init.py`
+- 把[数据文件](https://gitee.com/nonlinearthink/data_set_of_nonlinearthink/tree/master/%E6%9F%90%E9%AB%98%E6%A0%A1%E6%A0%A1%E5%9B%AD%E6%B6%88%E8%B4%B9%E8%A1%8C%E4%B8%BA%E6%95%B0%E6%8D%AE%E9%9B%86)放到data目录下
+
+### 推荐运行环境
+- Pycharm
+- vscode
+
+使用科学计算模式。
