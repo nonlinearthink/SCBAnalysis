@@ -191,14 +191,14 @@ ax.set_xlabel('平均存储系数')
 ax.set_ylabel('总消费系数')
 ax.set_zlabel('消费频率系数')
 plt.legend()
-plt.savefig(os.path.join('img','2-2.png'), dpi=300)
+plt.savefig(os.path.join('img', '2-2.png'), dpi=300)
 
 # %%
 """对上图模型的验证"""
 # 根据上图请自行调整，因为K-Means分类的label值不稳定，所以每次运行完前面的无比更改这个值
 # 这个类是上图中所有项都最低的那一个类
 
-group_label = 0
+group_label = 2
 deep_model = features[features.Labels == group_label]
 deep_model['AvgSurplus'] = deep_model['AvgSurplus'].astype("float64")
 deep_model['TotalConsume'] = deep_model['TotalConsume'].astype("float64")
@@ -218,8 +218,22 @@ results = AHP(criteria, b).run()
 
 # %%
 """"""
-deep_model['Rank'] = results[0]
-deep_model.sort_values(by='Rank')
+std = MinMaxScaler(feature_range=(0, 10))  # 标准化，不然画出来比较难看
+results_t = list(map(lambda x: x * 10000, results[0]))
+deep_model['Rank'] = results_t
+deep_model['Grade'] = deep_model['Rank'].apply(int)
+deep_model = deep_model.sort_values(by='Rank')
+display(deep_model)
 
-
+# %%
+count = []
+grade = []
+for name, group in deep_model.groupby(deep_model['Grade']):
+    grade.append('{}分'.format(name))
+    count.append(group.shape[0])
+explode = tuple(map(lambda x: 0.1 if x == max(count) else 0, count))
+plt.pie(count, explode=explode, labels=grade, autopct='%3.1f%%')
+plt.axis('equal')
+plt.legend(fontsize='small',loc="upper right")
+plt.savefig(os.path.join('img', '3-1.png'), dpi=300)
 # %%
